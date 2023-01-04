@@ -1,13 +1,19 @@
 const customerModel = require('../model/customerModel');
 const orderModel = require('../model/orderModel')
-
+const mongoose = require('mongoose');
 const createOrder = async (req,res)=>{
     try{
         let data = req.body;
         let {customerId,product,totalprice,discount}=data
         let storingCustomerId = req.params.customerId;
+        if(!mongoose.isValidObjectId(storingCustomerId)){
+            return res.status(400).send({msg:"customerId is not a valid objectId"})
+        }
         data.customerId=storingCustomerId;
-        var CheckingcustomerIdInDb = await customerModel.findOne({_id:storingCustomerId});
+        let CheckingcustomerIdInDb = await customerModel.findOne({_id:storingCustomerId});
+        if(!CheckingcustomerIdInDb){
+            return res.status(404).send({msg:"customerId is not found in database"})
+        }
         let savedData = await orderModel.create(data); 
         let totalOrderCount = CheckingcustomerIdInDb.totalorders+1;
         let updatingTotalOrderCountInCustomerModel = await customerModel.findOneAndUpdate(data,{totalorders:totalOrderCount},{new:true}); 
