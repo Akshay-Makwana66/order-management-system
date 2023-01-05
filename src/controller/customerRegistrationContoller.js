@@ -1,5 +1,4 @@
 const userModel = require('../model/customerModel')
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt =require('jsonwebtoken');
 var saltRounds= 10;
@@ -7,6 +6,9 @@ var saltRounds= 10;
 const registrationOfUser = async (req,res)=>{
     try{
          let data = req.body;
+         // Checks whether body is empty or not
+        if (Object.keys(data).length == 0)return res.status(400).send({ status: false, msg: "Body cannot be empty"});
+    
          data.password = await bcrypt.hash(data.password, saltRounds);                   
          let savedData = await userModel.create(data);
          res.status(201).send({msg:"Your registration is successfully done, ThankYou", data: savedData})

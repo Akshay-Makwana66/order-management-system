@@ -10,7 +10,7 @@ const customerValidations = async (req,res,next)=>{
         if (typeof name !== "string")return res.status(400).send({ status: false, msg: " Please enter name as a String" });
         let validName = /^\w[a-zA-Z.]*$/;
         if (!validName.test(name))return res.status(400).send({ status: false, msg: "The name may contain only letters" });
-        name = name.trim();
+        name = name.trim();   
 
         // Checks whether email is empty or is enter as a string or is a valid email or already exists
         if (!data.email)return res.status(400).send({ status: false, msg: "Please enter E-mail" });

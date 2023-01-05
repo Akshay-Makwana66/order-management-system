@@ -18,7 +18,7 @@ application. We need to keep track of how much discount is given to which
 customer and for which order, so that customers can claim money back later.
 ● It is not mandatory to implement any other entities which are not mentioned here,
 like products or payments etc.
-Hints
+Hints-
 ● Identify the entities
 ● Think of the REST APIs needed.
 ● Identify things which can be done asynchronuosly

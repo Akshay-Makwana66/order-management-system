@@ -1,11 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const multer = require('multer');
-// const aws = require('aws-sdk')
 const route = require('./route/route')
 const app = express();
 app.use(express.json())
-app.use(multer().any());
 
 mongoose.connect('mongodb+srv://AkshayMakwana:Akshay123@cluster0.zmta9.mongodb.net/order-management-system-DB?retryWrites=true&w=majority',
 {
@@ -16,6 +13,6 @@ mongoose.connect('mongodb+srv://AkshayMakwana:Akshay123@cluster0.zmta9.mongodb.n
 
 .catch((err)=>{ console.log(err) })
 
-app.use('/', route)
+app.use('/', route);
 
 app.listen(3000,()=>{ console.log('server start') });

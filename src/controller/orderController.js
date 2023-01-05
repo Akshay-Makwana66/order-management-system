@@ -5,7 +5,7 @@ const createOrder = async (req,res)=>{
     try{
         let data = req.body;
         let {customerId,product,totalprice,discount}=data
-        let storingCustomerId = req.params.customerId;
+        let storingCustomerId = req.params.customerId; 
         if(!mongoose.isValidObjectId(storingCustomerId)){
             return res.status(400).send({msg:"customerId is not a valid objectId"})
         }
@@ -23,7 +23,7 @@ const createOrder = async (req,res)=>{
                 promoted to Gold customer and enjoy 10% discounts`)
             }
                  if(totalOrderCount>=10 && totalOrderCount<20){      
-                        let totalOrderDiscountFor10_Order = CheckingcustomerIdInDb.totaldiscount+(totalprice/10);  
+                        let totalOrderDiscountFor10_Order = CheckingcustomerIdInDb.totaldiscount+(totalprice*10/100);  
                         let orderDiscount = savedData._id + '-' + totalprice*10/100;
                         let updatingTotalDiscountPerOrder = await customerModel.findOneAndUpdate(data,{totaldiscount:totalOrderDiscountFor10_Order,$push:{orderdiscount:orderDiscount}},{new:true});
                        console.log("You are placed 10 order so, now you have gold premium 10% discount on order ")
