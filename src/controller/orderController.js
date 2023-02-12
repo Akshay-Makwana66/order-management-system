@@ -25,12 +25,12 @@ const createOrder = async (req,res)=>{
                  if(totalOrderCount>=10 && totalOrderCount<20){      
                         let totalOrderDiscountFor10_Order = CheckingcustomerIdInDb.totaldiscount+(totalprice*10/100);  
                         let orderDiscount = savedData._id + '-' + totalprice*10/100;
-                        let updatingTotalDiscountPerOrder = await customerModel.findOneAndUpdate(data,{totaldiscount:totalOrderDiscountFor10_Order,$push:{orderdiscount:orderDiscount}},{new:true});
+                        let updatingTotalDiscountPerOrder = await customerModel.findOneAndUpdate(data,{category:"Gold",totaldiscount:totalOrderDiscountFor10_Order,$push:{orderdiscount:orderDiscount}},{new:true});
                        console.log("You are placed 10 order so, now you have gold premium 10% discount on order ")
                      }
                      if(totalOrderCount>=20){
                         let totalOrderDiscountFor20_Order = CheckingcustomerIdInDb.totaldiscount+(totalprice*20/100);
-                        let updatingTotalOrderDiscountFor20_Order = await customerModel.findOneAndUpdate(data,{totaldiscount:totalOrderDiscountFor20_Order},{new:true});
+                        let updatingTotalOrderDiscountFor20_Order = await customerModel.findOneAndUpdate(data,{category:"Platinum",totaldiscount:totalOrderDiscountFor20_Order},{new:true});
                             console.log(`You are placed 20 order so, now you have platinum premium 20% discount on order `)
                          }
         res.status(201).send({message:'Your order is successfully created', data: savedData}); 

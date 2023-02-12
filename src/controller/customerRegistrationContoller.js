@@ -6,9 +6,7 @@ var saltRounds= 10;
 const registrationOfUser = async (req,res)=>{
     try{
          let data = req.body;
-         // Checks whether body is empty or not
-        if (Object.keys(data).length == 0)return res.status(400).send({ status: false, msg: "Body cannot be empty"});
-    
+
          data.password = await bcrypt.hash(data.password, saltRounds);                   
          let savedData = await userModel.create(data);
          res.status(201).send({msg:"Your registration is successfully done, ThankYou", data: savedData})
@@ -22,18 +20,9 @@ const registrationOfUser = async (req,res)=>{
 
 const loginUser = async (req,res)=>{
     try{
-        let data = req.body         
-
-        // Checks whether body is empty or not
-        if (Object.keys(data).length == 0)return res.status(400).send({ status: false, msg: "Body cannot be empty"});
-    
-        // Checks whether email is entered or not
-        if (!data.email) return res.status(400).send({ status: false, msg: "Please enter E-mail"});
-        let userEmail= data.email
-    
-         // Checks whether password is entered or not
-        if (!data.password) return res.status(400).send({ status: false, msg: "Please enter Password" }); 
+        let data = req.body;
        
+        let userEmail= data.email
         let userPassword= data.password
     
         let checkingUserEmailInDB= await userModel.findOne({email: userEmail})
@@ -50,13 +39,12 @@ const loginUser = async (req,res)=>{
         let token= jwt.sign({
           customerId: checkingUserEmailInDB._id.toString(),
         }, "order-management-system");
-        //Setting token in response header
-        res.setHeader("x-api-key",token)
-        res.status(201).send({status:true,data: token})
+        //sending token in response body
+        res.status(201).send({message:'You are Successfully LoggedIn',data: token})
       }
     catch(error){
         res.status(500).send({msg:"sorry for inconvenience", Error: error})
     }
-}
+};
 
 module.exports={registrationOfUser,loginUser}

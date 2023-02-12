@@ -45,6 +45,21 @@ const customerValidations = async (req,res,next)=>{
     res.status(500).send({ status: false, msg: error.message });
   }
 };
+
+const userLoginValidations = async (req,res,next)=>{
+    try{
+        let data = req.body;
+        // Checks whether body is empty or not
+        if (Object.keys(data).length == 0)return res.status(400).send({ status: false, msg: "Body cannot be empty"});
+          // Checks whether email is entered or not
+        if (!data.email) return res.status(400).send({ status: false, msg: "Please enter E-mail"});
+        // Checks whether password is entered or not
+        if (!data.password) return res.status(400).send({ status: false, msg: "Please enter Password" }); 
+        next();
+        }catch(err){
+         res.status(500).send({ message:'Sorry, for the inconvenience caused', msg: err.message });
+        }
+}
     
 const orderValidations = async (req,res,next)=>{
     try{
@@ -67,7 +82,7 @@ const orderValidations = async (req,res,next)=>{
     }
 
 }
-module.exports={customerValidations,orderValidations}
+module.exports={customerValidations,userLoginValidations,orderValidations}
 
 
 

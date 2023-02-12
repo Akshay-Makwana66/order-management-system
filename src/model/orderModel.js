@@ -13,10 +13,7 @@ const createOrderSchema = new mongoose.Schema({
    totalprice:{
     type:Number,
     required:true
-   },
-   discount:{
-    type:String
-   }   
+   }
 
 },{timestamps:true});
 

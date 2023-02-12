@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
-const register = {
+const mandatory = {
     type:String,
     required:true,
     unique:true
 }
 const customerSchema = new mongoose.Schema({
-    name: register,
-    email: register,
-    password: register,
-    phone:register,
+    name: mandatory,
+    email: mandatory,
+    password: mandatory,
+    phone:mandatory,
     category:{
         type:String,
         enum:["Regular", "Gold", "Platinum"],
